@@ -61,5 +61,34 @@
 6. CONTROL STRUCTURES:
 
     *** IF STATEMENT:
-    * Memo: Nullish/falsy values: false, null, undefined, 0, -0(negative zero), 0n(bigInt zero), '', NaN
+    * Memo: Nullish/falsy values: false, null, undefined, 0, -0(negative zero), 0n(bigInt zero), '', NaN, 
+                    also: document.all (Objects are falsy if and only if they have the [[IsHTMLDDA]] internal slot. That slot only exists in document.all and cannot be set using JavaScript.)
 
+    *** SWITCH CASE DEFAULT BREAK
+    * Leaving out BREAK makes JS execution as is... without breaking
+
+7. FOR LOOP
+    
+    * Memo: Controlling loops with BREAK(completely end the loop) & CONTINUE(only finish the current itteration)...
+
+8. WHILE LOOP
+
+9. DO WHILE LOOP
+
+10. OPERATORS
+
+    * (+) ADDITION
+    +=
+    a++
+    a--
+    ++a
+    --a
+    //floating number issues:
+
+    +  tries to coerse values into something that makes sense:
+        - null ==> 0;
+        - undefined ==> NaN
+        - true ==> 1;
+        - false ==> 0;
+
+    * (-) SUBTRACTION
