@@ -1,0 +1,3 @@
+Symbol.Iterator
+//Generatori
+--
