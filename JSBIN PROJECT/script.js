@@ -1,4 +1,4 @@
-"use strict";
+// "use strict";
 console.log("Hello to the browser.");
 const maxim = { name: "Max" };
 console.log(maxim);
@@ -358,11 +358,101 @@ for (let index = 0; index < arrayNums.length; index++) {
   console.log(anArray); //['a','b']
   console.log(anotherArray); //[5]
 }
-let test = "Global scope";
+// let test = "Global scope";
 function localScope() {
-  let test = "Local scope";
-  console.log(test);
+  let test1 = "Local scope";
+  console.log(test1);
 }
 localScope();
-console.log(test);
 //if not using strict: if local var is not declared it is automatically assigned to global object
+
+function globalScope() {
+  test2 = "Local Scope without var keyword";
+}
+globalScope();
+console.log(test2); //when use strict mode is on, referenceerror: test is not defined
+//without strict mode, //local scope without var keyword
+//Reason: Behaviour exibited is because test inside globalScope is assigned with var keyword and located on global object (window in this case)
+
+{
+  //forEach, push, pop, unshift, shift
+  let array = [1, 2, 3];
+  console.log("starting array: ", array);
+
+  array.forEach((el, index) => console.log(el, " is on index", index));
+  let returnValueOfAPushMethod = array.push(4);
+  console.log("pushed element 4: ", array);
+  console.log("new length with pushed element is: ", returnValueOfAPushMethod);
+
+  let returnValueOfAPopMethod = array.pop();
+  console.log("popped: ", array);
+  console.log("popped element is: ", returnValueOfAPopMethod);
+
+  let shiftMethodReturnValue = array.shift();
+  console.log("shifted: ", array);
+  console.log("shifted element: ", shiftMethodReturnValue);
+
+  let unShiftMethodReturnValue = array.unshift("new");
+  console.log("unshifted: ", array);
+  console.log("new length of unshifted array: ", unShiftMethodReturnValue);
+}
+{
+  //indexOf, splice
+  let array = [1, 2, 3, 4];
+  console.log("starting array: ", array);
+
+  array.unshift("new");
+  console.log(array);
+  array[array.indexOf("new")] = "old";
+  console.log("element on index new replaced with old", array);
+
+  let newArray = array.splice(2, 2); //splice changes the array
+  console.log(newArray);
+  console.log(array);
+}
+{
+  //slice
+  let array = [1, 2, 3, 4];
+  console.log("starting array: ", array);
+
+  array.unshift("new");
+  console.log(array);
+  array[array.indexOf("new")] = "old";
+  console.log("element on index new replaced with old", array);
+
+  let newArray = array.slice(1, 3); //slice doesn't change the beginning array
+  //pro tip: doesn't include the toElement
+  console.log(newArray);
+  console.log(array);
+
+  let greaterThanTwo = array.filter((el) => el > 2);
+  console.log("filtered array", greaterThanTwo);
+  console.log("old array", array);
+
+  let mappedArray = array.map((el) => el * 2);
+  console.log("mapped array", mappedArray);
+  console.log("old array", array);
+
+  let reversedArray = array.reverse();
+  console.log("reversed array", reversedArray);
+  console.log("old array", array);
+
+  let arrayToConcat = ["join", "me"];
+  console.log(array.concat(arrayToConcat));
+  console.log(array); //[4, 3, 2, 1, 'old']
+
+  //why would someone want to use array.join(arrayToConcatonate)?!
+  console.log(array.join(arrayToConcat)); //4join,me3join,me2join,me1join,meold
+}
+{
+  let array = [1, 2, 3, 4];
+  console.log(
+    "reduce method for array:",
+    array,
+    " (total, value) => return total + value: ",
+    array.reduce((total, value) => total + value)
+  );
+}
+{
+  //OBJECTS, FINALLY
+}

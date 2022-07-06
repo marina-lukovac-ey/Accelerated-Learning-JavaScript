@@ -153,3 +153,42 @@ Pro tip:
   GLOBAL: window object (browser)
 
   LOCAL: function
+  ...
+
+* Memo: When strict mode is on, variables must be declared with const let var
+  When off strict mode: variable declared in function scope, or anywhere else is automatically located on the global scope, window object in this matter...
+* Problem: test withing the function is not defined, until that function is called... This variable is acctually only then created and placed to the global scope
+
+//**\*\*\*\***\*\*\*\***\*\*\*\*** ARRAYS \***\*\*\*\*\*\*\***\*\***\*\*\*\*\*\*\***/
+
+1. INTRO
+
+- Memo: array.length , array indexes
+- Array: infinite collection of undefined values...
+- forEach();
+- push();
+- pop ();
+- shift();
+- unshift();
+
+- splice(fromIndex, howManyElements, newElement1, newElement2, newElement3)
+  splice CHANGES THE BEGINNING ARRAY
+  return value: newArray of spliced elements...
+
+- slice( [fromIndex, toIndex) ) \*\*\*
+  slice DOES NOT CHANGE starting array
+
+//Both filter and map DO NOT CHANGE starting array
+
+- filter(el=>condition returning true or false)
+- map(el=>map\*2)
+
+//But reverse DOES
+
+- reverse();
+- concat(newArray);
+
+- reduce((total,value)=>{return total+ value})
+  Reduce is recurring function: in every itteration does the given task specified in the return
+
+//**\*\*\*\***\*\*\*\***\*\*\*\*** OBJECTS \***\*\*\*\*\*\*\***\*\***\*\*\*\*\*\*\***/
