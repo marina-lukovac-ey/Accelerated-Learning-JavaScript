@@ -192,3 +192,59 @@ Pro tip:
   Reduce is recurring function: in every itteration does the given task specified in the return
 
 //**\*\*\*\***\*\*\*\***\*\*\*\*** OBJECTS \***\*\*\*\*\*\*\***\*\***\*\*\*\*\*\*\***/
+
+- Memo: property names can be in camelCase, or string
+  firstName or first-name...
+  firstName is accessed by .notation, "first-name" with bracket notation
+- Memo: Object creating methods:
+  1. {key: value} //LITERAL NOTATION ... obj instance of Object
+  2. new Object() //
+  3. Object.create(whichPrototypeWeWantToSetItTo); //makes sense in Prototypal inheritance
+  4. a) Object.create(null); //object with no methods
+
+Every Object has Prototype, that is object of its own...
+
+Object.prototype is object accessible to all the objects created... all its properties and methods are available
+
+- PROTOTYPE CHAIN:
+
+  - js first checks if there is method directly on object
+  - later it goes up to Prototype of object
+  - if it doesn't still find it, it goes to the prototype of prototype of object
+  - .... through all of the prototypes of objects....
+    Object.getPrototypeOf(obj)===blueprintPrototype //true
+
+- CONSTRUCTOR FUNCTIONS:
+  Allowing default fields and methods ==>> ES6 Classes
+  function Person(){
+  this.name = 'Mari';
+  this.greet = function(){
+  console.log('Hello, I am '+this.name);
+  }
+  }
+  let person = new Person();
+  And if Person.prototype.name = 'Max' //later is not overridden because it is on a higher level
+  - Arguments:
+- PROTOTYPES VS. CONSTRUCTOR F-S
+
+  - constructor: allow default fields and methods...
+  - prototypes: allow to inherit from objects
+    \_\_\_ main difference: prototypes are on a higher level
+
+  check if obj is instance of: (person instanceof Person) //true
+
+* Memo: THIS **\*\***\*\***\*\***\*\*\*\***\*\***\*\***\*\***
+
+  Global scope: regardles use strict: this is window(global object)
+
+  function calls: regular functions in strict mode: undefined, when called in global scope...
+  arrow functions: both: this is a caller
+
+  .bind(pointerToObject)... works only during function call...
+  obj.fn.bind(person)() //this inside fn is person
+
+  - .bind(whatShouldBeBoundTo,arguments)() //bind needs separate call afterwards
+  - .call(whatShouldBePointedTo, argumentsForAFunction); //acts same as .bind()();
+  - .apply(whatShouldBeThis, [arrayOfArguments]); //acts same as .call();
+
+* Memo: Object.defineProperty(object,'property-name',{js object, with value property}), ADD getter, setter, writable, enumerable f

@@ -369,8 +369,8 @@ localScope();
 function globalScope() {
   test2 = "Local Scope without var keyword";
 }
-globalScope();
-console.log(test2); //when use strict mode is on, referenceerror: test is not defined
+// globalScope();
+// console.log(test2); //when use strict mode is on, referenceerror: test is not defined
 //without strict mode, //local scope without var keyword
 //Reason: Behaviour exibited is because test inside globalScope is assigned with var keyword and located on global object (window in this case)
 
@@ -455,4 +455,178 @@ console.log(test2); //when use strict mode is on, referenceerror: test is not de
 }
 {
   //OBJECTS, FINALLY
+  let person = {
+    name: "Marina",
+    age: 32,
+    details: {
+      hobbies: ["Sports", "Cooking"],
+      location: "Serbia",
+    },
+    greet: function () {
+      //check how to write this differently
+      console.log(`Hello ${this.name}, have a nice day!`);
+    },
+  };
+  person.greet();
+  console.log(person);
+  console.log(person.name);
+  console.log(person["name"]); //only useful when there is another variable dynamically derived...
+
+  let field = "name";
+  console.log(person[field]);
+
+  person.name = "Anna";
+  console.log(person);
+  console.log(window);
+
+  //Alternative Create Object
+
+  let anotherPerson = new Object();
+  anotherPerson.name = "Anna";
+  anotherPerson.age = 25;
+  console.log(anotherPerson);
+
+  let person1 = { name: "Max", age: 27 };
+  let person2 = { name: "Max", age: 27 };
+  console.log("Are these objects the same: ", person1 === person2);
+
+  //Alternative Create Object 2
+  let anotherPerson2 = Object.create(null); //this method makes sense in Prototypal sense ! Because Object.Prototype is default....
+  anotherPerson2.name = "Anna";
+
+  let anotherPerson3 = Object.create(person);
+  console.log(anotherPerson3);
+  console.log(anotherPerson3.age);
+  console.log(person.prototype); //undefined
+  console.log(person.__proto__); //prototype object [object Object]
+  console.log(person.toString()); //"[object Object]"
+
+  //Watch this!
+  //Add method to Object.prototype and all the objects get acces to that method...
+  Object.prototype.greeting = function () {
+    console.log("Hello, " + this.name + " !");
+  };
+  person.greeting();
+  //I used greet, and since person already had greet method it overrided the Object.prototype one...
+  let max = Object.create(person);
+  max.name = "Max";
+  let anna = Object.create(person);
+  max.greeting();
+  anna.greeting();
+  //Prototype chaining: if js doesn't find method directly on the object it goes to objects prototype, etc
+  //unsafe way to find out if there is prototype of objects //DO NOT USE IN THE PRODUCTION CODE
+  console.log(anna.__proto__ === person); //true
+  console.log(anna.__proto__.__proto__ === Object.prototype); //true
+  //safe way to find out if ther is a prototype of an object
+  console.log(Object.getPrototypeOf(anna) === person); //true
+}
+{
+  //CONSTRUCTOR FUNCTIONS // ALTERNATIVE TO CREATE OBJECTS
+  function Person() {
+    this.name = "Max"; // Setting directly on object
+  }
+  Person.prototype.greet = function () {
+    console.log("Hello!");
+  };
+  Person.prototype.name = "Anna"; // Setting property on a higher level, doesn't override it...
+  let person = new Person();
+  console.log(person.name);
+  person.greet();
+
+  console.log("Is person instance of Person? ", person instanceof Person);
+
+  console.log(Object.getPrototypeOf(person) === Object.prototype); //false
+  console.log(Object.getPrototypeOf(person) === Person); //false
+  console.log(Object.getPrototypeOf(person) === Person.prototype); //true
+}
+{
+  //Constr function arguments
+  function Person(name, age) {
+    this.name = name;
+    this.age = age;
+  }
+  let person = new Person("Mari", 32);
+  console.log(person);
+}
+
+{
+  //************** THIS **************/
+  function fn() {
+    console.log(this); //use strict : undefined
+  }
+  let arrowFn = () => console.log(this); //because arrow function doesn't have this... this is a caller
+  let person = { name: "Maj", fank: fn, arrow: arrowFn };
+
+  person.fank(); //caller
+  person.arrow(); //window
+  fn(); //if use strict == > //undefined otherwise window
+  arrowFn(); //window
+}
+{
+  console.log("MAX THIS");
+  function fn(message) {
+    console.log(message);
+    console.log(this);
+    console.log("");
+  }
+  let obj = {
+    obfn: fn,
+  };
+  let person = { name: "Max" };
+  fn("only fn call"); //use strict undefined otherwise ==> window obj
+  obj.obfn("point to object"); //use strict ==> caller of an fn [object Object]{....}
+  //bind
+  obj.obfn.bind(this, "binded this");
+  obj.obfn("After binding window....");
+  obj.obfn.bind(person, "binded person")();
+  obj.obfn("obj basic call");
+  obj.obfn.bind(person, "Hello")();
+  obj.obfn.call(person, "Hello from the call");
+  obj.obfn.apply(person, ["Hello from the apply..."]);
+}
+{
+  //Create properties with defineProperty()
+  //Purpose: create properties with more detailed explanation
+  let account = {
+    cash: 12000,
+    _firstName: "Default",
+    withdraw: function (amount) {
+      this.cash -= amount;
+      console.log("Withdrew " + amount + " new cash reserve is: " + this.cash);
+    },
+  };
+
+  // Object.defineProperty(account, "deposit", {
+  //   value: function (amount) {
+  //     this.cash += amount;
+  //   },
+  // });
+  Object.defineProperty(account, "firstName", {
+    get: function () {
+      return this._firstName;
+    },
+    set: function (firstName) {
+      this._firstName = firstName;
+    },
+  });
+  console.log(account.firstName);
+  account.firstName = "id003";
+  console.log(account.firstName);
+}
+{
+  //Built-in functions and properties on objects...
+  let person = {
+    name: "Max",
+    age: 27,
+  };
+  console.log(person);
+  // delete person.name; //really delete it
+  console.log(person);
+  console.log("name" in person); //if there is a property
+  for (let field in person) {
+    console.log(field + ": " + person[field]); //bracket notation
+  }
+}
+{
+  //Errors & Debugging
 }
