@@ -11,3 +11,7 @@ unit testing
 onClick events mdn
 
 CORS...
+
+jQuery
+
+json.stringify() // pogledaj koji podaci se gube
